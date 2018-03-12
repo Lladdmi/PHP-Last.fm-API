@@ -107,6 +107,9 @@ class TrackApi extends BaseApi {
 		$vars = array_merge($vars, $methodVars);
 
 		if ( $call = $this->apiGetCall($vars) ) {
+			if(isset($call->error)){
+				return false;
+			}else{
 			$info['id'] = (string) $call->track->id;
 			$info['name'] = (string) $call->track->name;
 			$info['mbid'] = (string) $call->track->mbid;
@@ -138,7 +141,7 @@ class TrackApi extends BaseApi {
 			$info['wiki']['content'] = (string) $call->track->wiki->content;
 
 			return $info;
-		}
+		}}
 		else {
 			return false;
 		}
@@ -448,8 +451,8 @@ class TrackApi extends BaseApi {
                 // fix missing namespace (sic)
                 if (!isset($callNamespaces['opensearch'])) {
                     $call->results->addAttribute('xmlns:xmlns:opensearch', 'http://a9.com/-/spec/opensearch/1.1/');
-                    $call = new SimpleXMLElement($call->asXML());                    
-                }                
+                    $call = new SimpleXMLElement($call->asXML());
+                }
 				$opensearch = $call->results->children('http://a9.com/-/spec/opensearch/1.1/');
 				if ( $opensearch->totalResults > 0 ) {
 					$searchResults['totalResults'] = (string) $opensearch->totalResults;
