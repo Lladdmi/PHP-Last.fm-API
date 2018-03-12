@@ -184,7 +184,6 @@ class BaseApi
         }
         if((string)$xml->attributes()->status === 'failed' )
         {
-            $tnf = true;
             // throw new ApiFailedException($xml->error, intval($xml->error['code']));
         }
         if (!isset($error)) {
